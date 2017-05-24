@@ -26,6 +26,9 @@ private:
     void getMin(const cv::Mat& src1,const cv::Mat& src2,cv::Mat& dst);
     void getMax(const cv::Mat& src1,const cv::Mat& src2,cv::Mat& dst);
     void nonMaximumSuppression(const cv::Mat& img,int n=3,float tau=0.025,int margin=5);
+    void refineCorners(const cv::Mat& imgDu,const cv::Mat& imgDv,const cv::Mat& imgAngle,const cv::Mat& imgWeight,int r);
+    void edgeOrientations(const cv::Mat& imgAngle,const cv::Mat& imgWeight,int left,int right,int top,int down,int index);
+    void findModesMeanShift(std::vector<float> &angleHist,std::vector<float> &angleHistSmoothed,std::vector<std::pair<float,int> > &modes,float sigma);
 
 
 private:
@@ -44,6 +47,9 @@ private:
     cv::Mat templateB1;
     cv::Mat templateB2;
     std::vector<cv::Point* > cornerPoints;
+    std::vector<std::vector<float> > cornersEdge1;
+    std::vector<std::vector<float> > cornersEdge2;
+    std::vector<cv::Point* > cornerPointsRefined;
 
 
 
