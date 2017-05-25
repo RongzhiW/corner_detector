@@ -58,7 +58,7 @@ void Detector::getImageAngle(cv::Mat imDv,cv::Mat imDu,cv::Mat &result){
         const float* dataRight=imDu.ptr<float>(i);
         float* dataResult=result.ptr<float>(i);
         for(int j=0;j<nc*channels;++j){
-            if(abs(dataRight[j])>=0.000001){
+            if(std::abs(dataRight[j])>=0.000001){
                 dataResult[j]=atan2((float)dataLeft[j],(float)dataRight[j]);
                 if(dataResult[j]<0)dataResult[j]+=pi;
                 else if(dataResult[j]>pi)dataResult[j]-=pi;
@@ -92,7 +92,7 @@ void Detector::getImageWeight(cv::Mat imDv,cv::Mat imDu,cv::Mat &result){
         const float* dataRight=imDu.ptr<float>(i);
         float* dataResult=result.ptr<float>(i);
         for(int j=0;j<nc*channels;++j){
-            dataResult[j]=sqrt((float)dataLeft[j]*(float)dataLeft[j]+(float)dataRight[j]*(float)dataRight[j]);
+            dataResult[j]=std::sqrt((float)dataLeft[j]*(float)dataLeft[j]+(float)dataRight[j]*(float)dataRight[j]);
             //std::cout<<(float)dataLeft[j]<<' '<<(float)dataRight[j]<<' '<<dataResult[j]<<std::endl;
 
         }
@@ -101,7 +101,7 @@ void Detector::getImageWeight(cv::Mat imDv,cv::Mat imDu,cv::Mat &result){
 }
 
 float Detector::normpdf(float dist,float mu,float sigma){
-    return exp(-0.5*(dist-mu)*(dist-mu)/(sigma*sigma))/(sqrt(2*pi)*sigma);
+    return exp(-0.5*(dist-mu)*(dist-mu)/(sigma*sigma))/(std::sqrt(2*pi)*sigma);
 }
 
 void Detector::createCorrelationPatch(const cv::Mat& templateProp){
@@ -123,7 +123,7 @@ void Detector::createCorrelationPatch(const cv::Mat& templateProp){
     for(int u=0;u<width;++u){
         for(int v=0;v<height;++v){
             float vec[]={u-mu,v-mv};
-            float dis=sqrt((u-mu)*(u-mu)+(v-mv)*(v-mv));
+            float dis=std::sqrt((u-mu)*(u-mu)+(v-mv)*(v-mv));
             float side1=vec[0]*nor1[0]+vec[1]*nor1[1];
             float side2=vec[0]*nor2[0]+vec[1]*nor2[1];
             if(side1<=-0.1&&side2<=-0.1){
@@ -264,42 +264,60 @@ void Detector::refineCorners(const cv::Mat& imgDu,const cv::Mat& imgDv,const cv:
         int top=std::max(cv-r,0);
         int down=std::min(cv+r,height-1);
         edgeOrientations(imgAngle,imgWeight,left,right,top,down,i);
+
         if((cornersEdge1[i][0]==0.0&&cornersEdge1[i][1]==0.0) || (cornersEdge2[i][0]==0.0&&cornersEdge2[i][1]==0.0))continue;
+        //static int counter=0;
+        //std::cout<<"count:"<<++counter<<" ang1:"<<cornersEdge1[i][0]<<' '<<cornersEdge1[i][1\
+                       ]<<" ang2:"<<cornersEdge2[i][0]<<' '<<cornersEdge2[i][1]<<std::endl;
 
-        cv::Mat A1(2,2,CV_32F);
-        cv::Mat A2(2,2,CV_32F);
-        A1.zeros(2,2,CV_32F);
-        A2.zeros(2,2,CV_32F);
 
-        cv::Mat G(2,2,CV_32F);
-        cv::Mat b(2,1,CV_32F);
-        G.zeros(2,2,CV_32F);
-        b.zeros(2,1,CV_32F);
+        cv::Mat A1=cv::Mat::zeros(2,2,CV_32F);
+        cv::Mat A2=cv::Mat::zeros(2,2,CV_32F);
+        //std::cout<<"A1:"<<A1<<std::endl;
+        //std::cout<<"A2:"<<A2<<std::endl;
+
+        cv::Mat G=cv::Mat::zeros(2,2,CV_32F);
+        cv::Mat b=cv::Mat::zeros(2,1,CV_32F);
+        //std::cout<<"G:"<<G<<std::endl;
+        //std::cout<<"b:"<<b<<std::endl;
+
+        std::vector<float> e1(cornersEdge1[i]);
+        std::vector<float> e2(cornersEdge2[i]);
+        //std::cout<<"e1:"<<e1[0]<<' '<<e1[1]<<" e2:"<<e2[0]<<' '<<e2[1]<<std::endl;
+
         for(int u=left;u<=right;++u){
             for(int v=top;v<=down;v++){
                 std::vector<float> gp;
                 gp.push_back(imgDu.at<float>(v,u));
                 gp.push_back(imgDv.at<float>(v,u));
-                float normLen=sqrt(gp[0]*gp[0]+gp[1]*gp[1]);
+                float normLen=std::sqrt(gp[0]*gp[0]+gp[1]*gp[1]);
+                //std::cout<<"normLen:"<<normLen<<std::endl;
                 if(normLen<0.1)continue;
                 gp[0]=gp[0]/normLen;
                 gp[1]=gp[1]/normLen;
-                std::vector<float> e1(cornersEdge1[i]);
-                std::vector<float> e2(cornersEdge2[i]);
 
-                if(abs(gp[0]*e1[0]+gp[1]*e1[1])<0.25){
+
+//                float dot_gp_e1=gp[0]*e1[0]+gp[1]*e1[1];
+//                dot_gp_e1=(dot_gp_e1>0)?dot_gp_e1:-dot_gp_e1;
+                float dot_gp_e1=std::abs(gp[0]*e1[0]+gp[1]*e1[1]);
+                if(dot_gp_e1<0.25){
                     A1.at<float>(0,0)+=gp[0]*gp[0];
                     A1.at<float>(0,1)+=gp[0]*gp[1];
                     A1.at<float>(1,0)+=gp[1]*gp[0];
                     A1.at<float>(1,1)+=gp[1]*gp[1];
                 }
-                if(abs(gp[0]*e2[0]+gp[1]*e2[1])<0.25){
+
+//                float dot_gp_e2=gp[0]*e2[0]+gp[1]*e2[1];
+//                dot_gp_e2=(dot_gp_e2>0)?dot_gp_e2:-dot_gp_e2;
+                float dot_gp_e2=std::abs(gp[0]*e2[0]+gp[1]*e2[1]);
+                if(dot_gp_e2<0.25){
                     A2.at<float>(0,0)+=gp[0]*gp[0];
                     A2.at<float>(0,1)+=gp[0]*gp[1];
                     A2.at<float>(1,0)+=gp[1]*gp[0];
                     A2.at<float>(1,1)+=gp[1]*gp[1];
                 }
-
+                //std::cout<<"A1:"<<A1<<" A2:"<<A2<<std::endl;
+                //std::cout<<"dot_gp_e1:"<<dot_gp_e1<<" dot_gp_e2:"<<dot_gp_e2<<std::endl;
                 std::vector<float> vec_cp;
                 vec_cp.push_back(u-cu);
                 vec_cp.push_back(v-cv);
@@ -307,21 +325,28 @@ void Detector::refineCorners(const cv::Mat& imgDu,const cv::Mat& imgDv,const cv:
                     float dot=vec_cp[0]*e1[0]+vec_cp[1]*e1[1];
                     float d1u=vec_cp[0]-dot*e1[0];
                     float d1v=vec_cp[1]-dot*e1[1];
-                    float d1=sqrt(d1u*d1u+d1v*d1v);
+                    float d1=std::sqrt(d1u*d1u+d1v*d1v);
 
                     float dot2=vec_cp[0]*e2[0]+vec_cp[1]*e2[1];
                     float d2u=vec_cp[0]-dot2*e2[0];
                     float d2v=vec_cp[1]-dot2*e2[1];
-                    float d2=sqrt(d2u*d2u+d2v*d2v);
+                    float d2=std::sqrt(d2u*d2u+d2v*d2v);
 
-                    if((d1<3&&abs(gp[0]*e1[0]+gp[1]*e1[1])<0.25) || (d2<3&&abs(gp[0]*e2[0]+gp[1]*e2[1])<0.25)){
+                    if((d1<3&&dot_gp_e1<0.25) || (d2<3&&dot_gp_e2<0.25)){
+
                         G.at<float>(0,0)+=gp[0]*gp[0];
                         G.at<float>(0,1)+=gp[0]*gp[1];
                         G.at<float>(1,0)+=gp[1]*gp[0];
                         G.at<float>(1,1)+=gp[1]*gp[1];
                         b.at<float>(0,0)+=gp[0]*gp[0]*u+gp[0]*gp[1]*v;
                         b.at<float>(1,0)+=gp[1]*gp[0]*u+gp[1]*gp[1]*v;
+                        //std::cout<<"G:"<<G<<std::endl;
+                        //std::cout<<"b:"<<b<<std::endl;
+                        //std::cout<<gp[0]*gp[0]<<' '<<gp[0]*gp[1]<<' '<<gp[1]*gp[0]<<' '\
+                                   <<gp[1]*gp[1]<<' '<<gp[0]*gp[0]*u+gp[0]*gp[1]*v<<' '<<gp[1]*gp[0]*u+gp[1]*gp[1]*v<<std::endl;
+
                     }
+                    //std::cout<<"G:"<<G<<" b:"<<b<<std::endl;
                 }
 
             }
@@ -336,7 +361,13 @@ void Detector::refineCorners(const cv::Mat& imgDu,const cv::Mat& imgDv,const cv:
         cornersEdge2[i][0]=vt2.at<float>(1,0);
         cornersEdge2[i][1]=vt2.at<float>(1,1);
 
-        if(abs(cv::determinant(G))>0.001){
+        //std::cout<<"newang1:"<<cornersEdge1[i][0]<<' '<<cornersEdge1[i][1\
+                       ]<<" newang2:"<<cornersEdge2[i][0]<<' '<<cornersEdge2[i][1]<<std::endl;
+//        float absDeterG=cv::determinant(G);
+//        absDeterG=(absDeterG>0)?absDeterG:-absDeterG;
+        //std::cout<<"G:"<<G<<std::endl;
+        //std::cout<<"det(G):"<<std::abs(cv::determinant(G))<<std::endl;
+        if(std::abs(cv::determinant(G))>0.001){
             cv::Mat cornerNew(2,1,CV_32F);
             cornerNew=G.inv()*b;
 
@@ -345,15 +376,16 @@ void Detector::refineCorners(const cv::Mat& imgDu,const cv::Mat& imgDv,const cv:
             float new_v=cornerNew.at<float>(1,0);
             float cur_u=pTmp->x;
             float cur_v=pTmp->y;
-            if(sqrt((new_u-cur_u)*(new_u-cur_u)+(new_v-cur_v)*(new_v-cur_v))>=4){
-                cornersEdge1[i][0]=0.0;
-                cornersEdge1[i][1]=0.0;
-                cornersEdge2[i][0]=0.0;
-                cornersEdge2[i][1]=0.0;
+            //std::cout<<"new_u:"<<new_u<<" cur_u:"<<cur_u<<" new_v:"<<new_v<<" cur_v:"<<cur_v<<std::endl;
+//            if(sqrt((new_u-cur_u)*(new_u-cur_u)+(new_v-cur_v)*(new_v-cur_v))>=4){
+//                cornersEdge1[i][0]=0.0;
+//                cornersEdge1[i][1]=0.0;
+//                cornersEdge2[i][0]=0.0;
+//                cornersEdge2[i][1]=0.0;
 
-            }
-            pTmp->x=new_u;
-            pTmp->x=new_v;
+//            }
+//            pTmp->x=new_u;
+//            pTmp->x=new_v;
 
         }
         else{
@@ -373,7 +405,7 @@ void Detector::edgeOrientations(const cv::Mat& imgAngle,const cv::Mat& imgWeight
     for(int u=left;u<=right;++u){
         for(int v=top;v<=down;++v){
             float ang=imgAngle.at<float>(v,u)+pi/2;
-            ang=ang>pi?ang-pi:ang;
+            ang=ang>pi?(ang-pi):ang;
             vecAngle.push_back(ang);
             vecWeight.push_back(imgWeight.at<float>(v,u));
         }
@@ -398,11 +430,20 @@ void Detector::edgeOrientations(const cv::Mat& imgAngle,const cv::Mat& imgWeight
     most1Angle=(most1Angle>most2Angle)?most1Angle:most2Angle;
     most2Angle=(tmp>most2Angle)?most2Angle:tmp;
     float deltaAngle=std::min(most1Angle-most2Angle,most2Angle+(float)pi-most1Angle);
-    if(deltaAngle<=0.3)return;
+    if(deltaAngle<=1.2)return;
     cornersEdge1[index][0]=cos(most1Angle);
     cornersEdge1[index][1]=sin(most1Angle);
     cornersEdge2[index][0]=cos(most2Angle);
     cornersEdge2[index][1]=sin(most2Angle);
+
+//    static int counter=0;
+//    static float most1AngleMin=4;
+//    static float most1AngleMax=0;
+//    if(most1Angle-most2Angle>most1AngleMax)most1AngleMax=most1Angle-most2Angle;
+//    if(most1Angle-most2Angle<most1AngleMin)most1AngleMin=most1Angle-most2Angle;
+//    std::cout<<"count:"<<++counter<<" ang1:"<<most1Angle<<" ang1-ang2:"<<most1Angle-most2Angle<<" min:"<<most1AngleMin<<" max:"<<most1AngleMax<<std::endl;
+    //std::cout<<"count:"<<++counter<<" ang1:"<<cornersEdge1[i][0]<<' '<<cornersEdge1[i][1\
+               ]<<" ang2:"<<cornersEdge2[i][0]<<' '<<cornersEdge2[i][1]<<std::endl;
 
 
 
@@ -427,10 +468,11 @@ void Detector::findModesMeanShift(std::vector<float> &angleHist,std::vector<floa
         int curLeft=(j-1)<0?j-1+sizeHist:j-1;
         int curRight=(j+1)>sizeHist-1?j+1-sizeHist:j+1;
         if(angleHistSmoothed[curLeft]<angleHistSmoothed[i]&&angleHistSmoothed[curRight]<angleHistSmoothed[i]){
-            modes.push_back(std::make_pair(i,angleHistSmoothed[i]));
+            modes.push_back(std::make_pair(angleHistSmoothed[i],i));
         }
     }
     std::sort(modes.begin(),modes.end());
+    //std::cout<<"modes size:"<<modes.size()<<std::endl;
 
 
 }
@@ -460,8 +502,9 @@ void Detector::cornerDetect(){
     cv::normalize(image,imageNorm,0,1,cv::NORM_MINMAX,CV_32F);
 
     int rowTempPros=templateProps.rows;
-    cv::Mat imgCorners(image.size(),CV_32F);
-    imgCorners.zeros(image.size(),CV_32F);
+    cv::Mat imgCorners=cv::Mat::zeros(image.size(),CV_32F);
+    //imgCorners.zeros(image.size(),CV_32F);
+    //std::cout<<"imgCorners:"<<imgCorners<<std::endl;
     cv::Mat imgCornerA1(image.size(),CV_32F);
     cv::Mat imgCornerA2(image.size(),CV_32F);
     cv::Mat imgCornerB1(image.size(),CV_32F);
@@ -506,7 +549,7 @@ void Detector::cornerDetect(){
 
     }
 
-    nonMaximumSuppression(imgCorners,3,0.025,5);
+    nonMaximumSuppression(imgCorners,6,0.1,10);
 
     refineCorners(imageDu,imageDv,imageAngle,imageWeight,10);
 

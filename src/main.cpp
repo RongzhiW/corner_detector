@@ -20,7 +20,9 @@ int main(int argc, char* argv[])
 
     //Load Image
     string basePath="/home/tianu/onlyCatkin_ws/src/corner_detector/data/";
-    cv::Mat image=cv::imread(basePath+"caliPattern_1.jpg");
+    string imagePath=basePath+"10.jpg";
+    //cv::Mat image=cv::imread(basePath+"caliPattern_1.jpg");
+    cv::Mat image=cv::imread(imagePath);
 
     if(!image.data){
         cerr<<"image load failed"<<endl;
