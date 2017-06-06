@@ -444,6 +444,8 @@
       </Build>
       <Unit filename="/home/tianu/onlyCatkin_ws/src/corner_detector/src/detector.cpp">
       </Unit>
+      <Unit filename="/home/tianu/onlyCatkin_ws/src/corner_detector/src/imageContainer.cpp">
+      </Unit>
       <Unit filename="/home/tianu/onlyCatkin_ws/src/corner_detector/src/main.cpp">
       </Unit>
       <Unit filename="/usr/src/gtest/src/gtest-all.cc">
@@ -451,6 +453,8 @@
       <Unit filename="/usr/src/gtest/src/gtest_main.cc">
       </Unit>
       <Unit filename="/home/tianu/onlyCatkin_ws/src/corner_detector/src/detector.h">
+      </Unit>
+      <Unit filename="/home/tianu/onlyCatkin_ws/src/corner_detector/src/imageContainer.h">
       </Unit>
       <Unit filename="/home/tianu/onlyCatkin_ws/src/corner_detector/CMakeLists.txt">
           <Option virtualFolder="CMake Files\" />

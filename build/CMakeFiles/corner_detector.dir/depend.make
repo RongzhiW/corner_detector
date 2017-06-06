@@ -14,7 +14,21 @@ CMakeFiles/corner_detector.dir/src/detector.cpp.o: /usr/local/include/opencv2/hi
 CMakeFiles/corner_detector.dir/src/detector.cpp.o: /usr/local/include/opencv2/imgproc/imgproc.hpp
 CMakeFiles/corner_detector.dir/src/detector.cpp.o: /usr/local/include/opencv2/imgproc/types_c.h
 
+CMakeFiles/corner_detector.dir/src/imageContainer.cpp.o: ../src/imageContainer.cpp
+CMakeFiles/corner_detector.dir/src/imageContainer.cpp.o: ../src/imageContainer.h
+CMakeFiles/corner_detector.dir/src/imageContainer.cpp.o: /usr/local/include/opencv2/core/core.hpp
+CMakeFiles/corner_detector.dir/src/imageContainer.cpp.o: /usr/local/include/opencv2/core/core_c.h
+CMakeFiles/corner_detector.dir/src/imageContainer.cpp.o: /usr/local/include/opencv2/core/mat.hpp
+CMakeFiles/corner_detector.dir/src/imageContainer.cpp.o: /usr/local/include/opencv2/core/operations.hpp
+CMakeFiles/corner_detector.dir/src/imageContainer.cpp.o: /usr/local/include/opencv2/core/types_c.h
+CMakeFiles/corner_detector.dir/src/imageContainer.cpp.o: /usr/local/include/opencv2/core/version.hpp
+CMakeFiles/corner_detector.dir/src/imageContainer.cpp.o: /usr/local/include/opencv2/highgui/highgui.hpp
+CMakeFiles/corner_detector.dir/src/imageContainer.cpp.o: /usr/local/include/opencv2/highgui/highgui_c.h
+CMakeFiles/corner_detector.dir/src/imageContainer.cpp.o: /usr/local/include/opencv2/imgproc/imgproc.hpp
+CMakeFiles/corner_detector.dir/src/imageContainer.cpp.o: /usr/local/include/opencv2/imgproc/types_c.h
+
 CMakeFiles/corner_detector.dir/src/main.cpp.o: ../src/detector.h
+CMakeFiles/corner_detector.dir/src/main.cpp.o: ../src/imageContainer.h
 CMakeFiles/corner_detector.dir/src/main.cpp.o: ../src/main.cpp
 CMakeFiles/corner_detector.dir/src/main.cpp.o: /usr/local/include/opencv2/core/core.hpp
 CMakeFiles/corner_detector.dir/src/main.cpp.o: /usr/local/include/opencv2/core/core_c.h

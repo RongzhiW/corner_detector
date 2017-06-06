@@ -561,7 +561,7 @@ void Detector::cornerDetect(){
         std::vector<float> e1=cornersEdge1[i];
         std::vector<float> e2=cornersEdge2[i];
         if((e1[0]==0.0&&e1[1]==0.0)||(e2[0]==0.0&&e2[1]==0.0))continue;
-        cv::circle(imageRaw,*p,5,CV_RGB(255,0,0),3,8,0);
+        cv::circle(imageRaw,*p,3,CV_RGB(255,0,0),3,8,0);
 //        std::cout<<"u:"<<t->x<<" v:"<<t->y<<std::endl;
     }
 

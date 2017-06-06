@@ -472,6 +472,30 @@ src/detector.cpp.s:
 	$(MAKE) -f CMakeFiles/corner_detector.dir/build.make CMakeFiles/corner_detector.dir/src/detector.cpp.s
 .PHONY : src/detector.cpp.s
 
+src/imageContainer.o: src/imageContainer.cpp.o
+.PHONY : src/imageContainer.o
+
+# target to build an object file
+src/imageContainer.cpp.o:
+	$(MAKE) -f CMakeFiles/corner_detector.dir/build.make CMakeFiles/corner_detector.dir/src/imageContainer.cpp.o
+.PHONY : src/imageContainer.cpp.o
+
+src/imageContainer.i: src/imageContainer.cpp.i
+.PHONY : src/imageContainer.i
+
+# target to preprocess a source file
+src/imageContainer.cpp.i:
+	$(MAKE) -f CMakeFiles/corner_detector.dir/build.make CMakeFiles/corner_detector.dir/src/imageContainer.cpp.i
+.PHONY : src/imageContainer.cpp.i
+
+src/imageContainer.s: src/imageContainer.cpp.s
+.PHONY : src/imageContainer.s
+
+# target to generate assembly for a file
+src/imageContainer.cpp.s:
+	$(MAKE) -f CMakeFiles/corner_detector.dir/build.make CMakeFiles/corner_detector.dir/src/imageContainer.cpp.s
+.PHONY : src/imageContainer.cpp.s
+
 src/main.o: src/main.cpp.o
 .PHONY : src/main.o
 
@@ -535,6 +559,9 @@ help:
 	@echo "... src/detector.o"
 	@echo "... src/detector.i"
 	@echo "... src/detector.s"
+	@echo "... src/imageContainer.o"
+	@echo "... src/imageContainer.i"
+	@echo "... src/imageContainer.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"

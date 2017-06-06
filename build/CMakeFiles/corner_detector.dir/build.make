@@ -95,16 +95,41 @@ CMakeFiles/corner_detector.dir/src/detector.cpp.o.provides: CMakeFiles/corner_de
 
 CMakeFiles/corner_detector.dir/src/detector.cpp.o.provides.build: CMakeFiles/corner_detector.dir/src/detector.cpp.o
 
+CMakeFiles/corner_detector.dir/src/imageContainer.cpp.o: CMakeFiles/corner_detector.dir/flags.make
+CMakeFiles/corner_detector.dir/src/imageContainer.cpp.o: ../src/imageContainer.cpp
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/tianu/onlyCatkin_ws/src/corner_detector/build/CMakeFiles $(CMAKE_PROGRESS_3)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/corner_detector.dir/src/imageContainer.cpp.o"
+	/usr/bin/g++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/corner_detector.dir/src/imageContainer.cpp.o -c /home/tianu/onlyCatkin_ws/src/corner_detector/src/imageContainer.cpp
+
+CMakeFiles/corner_detector.dir/src/imageContainer.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/corner_detector.dir/src/imageContainer.cpp.i"
+	/usr/bin/g++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/tianu/onlyCatkin_ws/src/corner_detector/src/imageContainer.cpp > CMakeFiles/corner_detector.dir/src/imageContainer.cpp.i
+
+CMakeFiles/corner_detector.dir/src/imageContainer.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/corner_detector.dir/src/imageContainer.cpp.s"
+	/usr/bin/g++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/tianu/onlyCatkin_ws/src/corner_detector/src/imageContainer.cpp -o CMakeFiles/corner_detector.dir/src/imageContainer.cpp.s
+
+CMakeFiles/corner_detector.dir/src/imageContainer.cpp.o.requires:
+.PHONY : CMakeFiles/corner_detector.dir/src/imageContainer.cpp.o.requires
+
+CMakeFiles/corner_detector.dir/src/imageContainer.cpp.o.provides: CMakeFiles/corner_detector.dir/src/imageContainer.cpp.o.requires
+	$(MAKE) -f CMakeFiles/corner_detector.dir/build.make CMakeFiles/corner_detector.dir/src/imageContainer.cpp.o.provides.build
+.PHONY : CMakeFiles/corner_detector.dir/src/imageContainer.cpp.o.provides
+
+CMakeFiles/corner_detector.dir/src/imageContainer.cpp.o.provides.build: CMakeFiles/corner_detector.dir/src/imageContainer.cpp.o
+
 # Object files for target corner_detector
 corner_detector_OBJECTS = \
 "CMakeFiles/corner_detector.dir/src/main.cpp.o" \
-"CMakeFiles/corner_detector.dir/src/detector.cpp.o"
+"CMakeFiles/corner_detector.dir/src/detector.cpp.o" \
+"CMakeFiles/corner_detector.dir/src/imageContainer.cpp.o"
 
 # External object files for target corner_detector
 corner_detector_EXTERNAL_OBJECTS =
 
 ../bin/corner_detector: CMakeFiles/corner_detector.dir/src/main.cpp.o
 ../bin/corner_detector: CMakeFiles/corner_detector.dir/src/detector.cpp.o
+../bin/corner_detector: CMakeFiles/corner_detector.dir/src/imageContainer.cpp.o
 ../bin/corner_detector: CMakeFiles/corner_detector.dir/build.make
 ../bin/corner_detector: /usr/local/lib/libopencv_videostab.so.2.4.13
 ../bin/corner_detector: /usr/local/lib/libopencv_video.so.2.4.13
@@ -188,6 +213,7 @@ CMakeFiles/corner_detector.dir/build: ../bin/corner_detector
 
 CMakeFiles/corner_detector.dir/requires: CMakeFiles/corner_detector.dir/src/main.cpp.o.requires
 CMakeFiles/corner_detector.dir/requires: CMakeFiles/corner_detector.dir/src/detector.cpp.o.requires
+CMakeFiles/corner_detector.dir/requires: CMakeFiles/corner_detector.dir/src/imageContainer.cpp.o.requires
 .PHONY : CMakeFiles/corner_detector.dir/requires
 
 CMakeFiles/corner_detector.dir/clean:

@@ -27,6 +27,8 @@ add_executable(corner_detector
                 src/main.cpp
                 src/detector.cpp
                 src/detector.h
+                src/imageContainer.h
+                src/imageContainer.cpp
 
 )
 

@@ -1,6 +1,7 @@
 FILE(REMOVE_RECURSE
   "CMakeFiles/corner_detector.dir/src/main.cpp.o"
   "CMakeFiles/corner_detector.dir/src/detector.cpp.o"
+  "CMakeFiles/corner_detector.dir/src/imageContainer.cpp.o"
   "../bin/corner_detector.pdb"
   "../bin/corner_detector"
 )

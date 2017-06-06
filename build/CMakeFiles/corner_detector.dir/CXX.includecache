@@ -6,6 +6,10 @@
 
 #IncludeRegexTransform: 
 
+/home/tianu/onlyCatkin_ws/src/corner_detector/src/detector.cpp
+detector.h
+/home/tianu/onlyCatkin_ws/src/corner_detector/src/detector.h
+
 /home/tianu/onlyCatkin_ws/src/corner_detector/src/detector.h
 iostream
 -
@@ -16,6 +20,26 @@ opencv2/imgproc/imgproc.hpp
 opencv2/highgui/highgui.hpp
 /home/tianu/onlyCatkin_ws/src/corner_detector/src/opencv2/highgui/highgui.hpp
 vector
+-
+
+/home/tianu/onlyCatkin_ws/src/corner_detector/src/imageContainer.h
+iostream
+-
+opencv2/core/core.hpp
+/home/tianu/onlyCatkin_ws/src/corner_detector/src/opencv2/core/core.hpp
+opencv2/imgproc/imgproc.hpp
+/home/tianu/onlyCatkin_ws/src/corner_detector/src/opencv2/imgproc/imgproc.hpp
+opencv2/highgui/highgui.hpp
+/home/tianu/onlyCatkin_ws/src/corner_detector/src/opencv2/highgui/highgui.hpp
+vector
+-
+ros/ros.h
+-
+cv_bridge/cv_bridge.h
+-
+sensor_msgs/Image.h
+-
+sensor_msgs/image_encodings.h
 -
 
 /home/tianu/onlyCatkin_ws/src/corner_detector/src/main.cpp
@@ -33,6 +57,8 @@ unistd.h
 /home/tianu/onlyCatkin_ws/src/corner_detector/src/unistd.h
 detector.h
 /home/tianu/onlyCatkin_ws/src/corner_detector/src/detector.h
+imageContainer.h
+/home/tianu/onlyCatkin_ws/src/corner_detector/src/imageContainer.h
 
 /usr/local/include/opencv2/core/core.hpp
 opencv2/core/types_c.h
